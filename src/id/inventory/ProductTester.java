@@ -24,7 +24,7 @@ public class ProductTester {
     }
     
     public static void displayInventory(Product[] parameter){
-        System.out.println("\t\t=Daftar Produk=");
+        System.out.println("\n\t=Daftar Produk=");
         for (int i = 0;i<parameter.length;i++){
             System.out.println(parameter[i].toString());
         }
@@ -36,7 +36,7 @@ public class ProductTester {
         double tempPrice;
         
         for (int i = 0;i < products.length;i++){
-            System.out.println("\nBarang nomor "+ (i+1) +"\t:");
+            System.out.println("\n\t=Barang nomor "+ (i+1)+"=");
             System.out.println("Masukkan nama barang : ");
             tempName = in.next();
             System.out.println("Masukkan jumlah barang : ");
@@ -66,7 +66,7 @@ public class ProductTester {
     }
 
     public static int getMenuOption(Scanner in){
-        System.out.println("\t\t=Menu=\n1. Lihat Inventaris\n2. Tambah Persediaan\n3. Kurangi Persediaan\n4. Hentikan Produk\n0. Keluar");
+        System.out.println("\n\t=Menu=\n\n1. Lihat Inventaris\n2. Tambah Persediaan\n3. Kurangi Persediaan\n4. Hentikan Produk\n0. Keluar");
         int pilih = 0;
         do {
             try {
@@ -151,16 +151,16 @@ public class ProductTester {
     public static void executeMenuChoice(int menuChoice, Product[] products, Scanner in){
         switch (menuChoice) {
             case 1:
-            System.out.println("1. Lihat daftar produk");
+            System.out.println("\nLihat daftar produk");
             displayInventory(products);break;
             case 2:
-            System.out.println("Tambah Persediaan");
+            System.out.println("\nTambah Persediaan");
             addInventory(products, in);break;
             case 3:
-            System.out.println("Kurangi Persediaan");
+            System.out.println("\nKurangi Persediaan");
             deductInventory(products, in);break;
             case 4:
-            System.out.println("Hentikan Persediaan");
+            System.out.println("\nHentikan Persediaan");
             discontinueInventory(products, in);break;
         }
     }
