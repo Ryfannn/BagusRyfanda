@@ -6,30 +6,38 @@ public class Product {
     private String name;
     private int qty;
     private double price;
-    private boolean statusProduk;
+    private boolean statusProduk = true;
     
     public Product() { 
         number = 0;
         name = "Name";
         qty = 0;
         price = 0;
-        statusProduk = true;
     }
-
+    
     public Product(int number,String name,int qty,double price) {
         this.number = number;
         this.name = name;
         this.qty = qty;
         this.price = price;
-
+        
+    }
+    void addToInventory(int jumlah){
+        this.qty += jumlah;
     }
 
-    public void cetak() {
-        System.out.println("No. Item : "+number+"\nNama produk : "+name+"\nStok : "+qty+"\nHarga : $"+price+"\n");
+    void deductFromInventory(int jumlah) {
+        this.qty -= jumlah;
     }
     
     public String toString() {
-        return "No. Item\t : "+number+"\nNama produk\t : "+name+"\nStok\t\t : "+qty+"\nHarga\t\t : $"+price+"\nNilai persediaan : $"+getInventoryValue()+"\nStatus produk\t : "+statusProduk+"\n";
+        return 
+        "\nNo. Item\t : "+number+
+        "\nNama produk\t : "+name+
+        "\nStok\t\t : "+qty+
+        "\nHarga\t\t : $"+price+
+        "\nNilai persediaan : $"+getInventoryValue()+
+         "\nStatus produk\t : "+(statusProduk ? "Aktif" : "Tidak aktif");
     }
 
     public int getnumber(){
@@ -64,7 +72,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setStatusProduk(boolean statusProduk) {
+    public void setAktif(boolean statusProduk) {
         this.statusProduk = statusProduk;
     }
 
@@ -74,5 +82,6 @@ public class Product {
     public double getInventoryValue(){
         return price * qty;
     }
+
 
 }

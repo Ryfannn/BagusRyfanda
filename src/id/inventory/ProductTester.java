@@ -4,86 +4,164 @@ import java.util.Scanner;
 
 public class ProductTester {
     public static void main(String[] args) {
-
-        int maxSize = -1;
-
+        
         Scanner in = new Scanner(System.in);
-        int tempNumber;
+        
+        int menuChoice,maxSize;
+        maxSize = getNumProduct(in);
+
+        
+        if (maxSize == 0){
+            System.out.println("No Product Required");
+        } else {
+            Product products[] = new Product[maxSize];
+            addToInventory(products,in);
+            do {
+                menuChoice = getMenuOption(in);
+                executeMenuChoice(menuChoice, products, in);
+            } while (menuChoice!=0);
+        }
+    }
+    
+    public static void displayInventory(Product[] parameter){
+        System.out.println("\t\t=Daftar Produk=");
+        for (int i = 0;i<parameter.length;i++){
+            System.out.println(parameter[i].toString());
+        }
+    }
+    
+    public static void addToInventory(Product[] products, Scanner in){
         String tempName;
         int tempQty;
         double tempPrice;
-
+        
+        for (int i = 0;i < products.length;i++){
+            System.out.println("\nBarang nomor "+ (i+1) +"\t:");
+            System.out.println("Masukkan nama barang : ");
+            tempName = in.next();
+            System.out.println("Masukkan jumlah barang : ");
+            tempQty = in.nextInt();
+            System.out.println("Masukkan harga barang : ");
+            tempPrice = in.nextDouble();
+            products[i] = new Product(i+1,tempName,tempQty,tempPrice);
+        }
+    }
+    
+    public static int getNumProduct(Scanner in){
+        int maxSize = -1;
+        
         do {
             try {
                 System.out.println("Masukkan jumlah barang yang ingin diinput : ");
                 maxSize = in.nextInt();
                 if (maxSize < 0){
-                    System.out.println("Invalid data!");
+                    System.out.println("Incorrect number entered!");
                 }
             } catch (Exception e){
-                System.out.println("Invalid data!");
+                System.out.println("Incorrect type data entered!");
+                in.nextLine();
             }
-            in.nextLine();
+        } while (maxSize < 0);
+        return maxSize;
+    }
+
+    public static int getMenuOption(Scanner in){
+        System.out.println("\t\t=Menu=\n1. Lihat Inventaris\n2. Tambah Persediaan\n3. Kurangi Persediaan\n4. Hentikan Produk\n0. Keluar");
+        int pilih = 0;
+        do {
+            try {
+                System.out.println("Masukkan opsi menu: ");
+                pilih = in.nextInt();
+                if (pilih < 0 || pilih > 4) {
+                    System.out.println("Incorrect value entered!");
+                }
+            } catch (Exception e) {
+                System.out.println("Incorrect data type entered!");
+                in.nextLine();
+            }
+        } while (pilih < 0 || pilih > 4);
+        return pilih;
+    }
+
+    public static int getProductNumber(Product[] products, Scanner in){
+        int productChoice = -1;
+        for (int i = 0;i < products.length;i++) {
+            System.out.println((i+1)+". "+products[i].getname());
         }
-        while (maxSize < 0);
+        do {
+            try {
+                System.out.println("Masukkan nomor produk : ");
+                productChoice = in.nextInt();
+                if (productChoice < 0 || productChoice > products.length) {
+                    System.out.println("Incorrect number entered!");
+                }
+            } catch (Exception e) {
+                System.out.println("Incorrect type data entered!");
+                in.nextLine();
+            }
+        } while (productChoice < 0 || productChoice > products.length);
+        return productChoice - 1;
+    }
 
-        /*System.out.println("Masukkan nomor barang :");
-        tempNumber = in.nextInt();
-        System.out.println("Masukkan nama barang : ");
-        tempName = in.next();
-        System.out.println("Masukkan jumlah barang : ");
-        tempQty = in.nextInt();
-        System.out.println("Masukkan harga barang : ");
-        tempPrice = in.nextDouble();
+    public static void addInventory(Product[] products, Scanner in){
+        int productChoice;
+        int updateValue = -1;
+        productChoice = getProductNumber(products, in);
+        do {
+            try {
+                System.out.println("Masukkan jumlah barang yang ingin diinput :");
+                updateValue = in.nextInt();
+                if (updateValue < 0){
+                    System.out.println("Incorrect number entered!");
+                }
+            }catch (Exception e) {
+                System.out.println("Incorrect type data entered!");
+                in.nextLine();
+            }
+        } while (updateValue < 0);
+        products[productChoice].addToInventory(updateValue);
+    }
 
-        Product p1 = new Product(tempNumber,tempName,tempQty,tempPrice);
+    public static void deductInventory(Product[] products, Scanner in){
+        int productChoice,jumlah;
+        int updateValue = -1;
+        productChoice = getProductNumber(products, in);
+        jumlah = products[productChoice].getqty();
+        do {
+            try {
+                System.out.println("Masukkan jumlah barang yang ingin dideduct :");
+                updateValue = in.nextInt();
+                if (updateValue < 0 || updateValue > jumlah){
+                    System.out.println("Incorrect number entered!");
+                }
+            }catch (Exception e) {
+                System.out.println("Incorrect type data entered!");
+                in.nextLine();
+            }
+        } while (updateValue < 0 || updateValue > jumlah);
+        products[productChoice].deductFromInventory(updateValue);
+    }
 
-        int tempNumber1;
-        String tempName1;
-        int tempQty1;
-        double tempPrice1;
+    public static void discontinueInventory(Product[] products, Scanner in){
+        int productChoice;
+        productChoice = getProductNumber(products, in);
+        products[productChoice].setAktif(false);
+    }
 
-        System.out.println("\nMasukkan nomor barang :");
-        tempNumber1 = in.nextInt();
-        System.out.println("Masukkan nama barang : ");
-        tempName1 = in.next();
-        System.out.println("Masukkan jumlah barang : ");
-        tempQty1 = in.nextInt();
-        System.out.println("Masukkan harga barang : ");
-        tempPrice1 = in.nextDouble();
-
-        Product p2 = new Product(tempNumber1,tempName1,tempQty1,tempPrice1);
-
-        System.out.println("\n=======================\n");
-        p1.setStatusProduk(true);
-        p2.setStatusProduk(false);
-        System.out.println(p1.toString());
-        System.out.println(p2.toString());
-        
-        Product produk1 = new Product();
-        produk1.setnumber(001);
-        produk1.setname("Greatest Hits");
-        produk1.setqty(25);
-        produk1.setprice(9.99);
-        System.out.println(produk1.toString());
-
-        Product produk2 = new Product();
-        produk2.setnumber(002);
-        produk2.setname("Kecap");
-        produk2.setqty(20);
-        produk2.setprice(0.99);
-        System.out.println(produk2.toString());
-
-        Product produk3 = new Product(003,"Saos",30,1.09);
-        System.out.println(produk3.toString());
-
-        Product produk4 = new Product(004,"Sambal",39,1.19);
-        System.out.println(produk4.toString());
-
-        Product produk5 = new Product(005,"Sarden",21,2.29);
-        System.out.println(produk5.toString());
-
-        Product produk6 = new Product(006,"Minyak Goreng",90,5.39);
-        System.out.println(produk6.toString());*/
+    public static void executeMenuChoice(int menuChoice, Product[] products, Scanner in){
+        switch (menuChoice) {
+            case 1:
+            System.out.println("1. Lihat daftar produk");
+            displayInventory(products);break;
+            case 2:
+            System.out.println("Tambah Persediaan");
+            addInventory(products, in);break;
+            case 3:
+            System.out.println("Kurangi Persediaan");
+            deductInventory(products, in);break;
+            case 4:
+            System.out.println("Hentikan Persediaan");
+            discontinueInventory(products, in);break;
+        }
     }
 }
