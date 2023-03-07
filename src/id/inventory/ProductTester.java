@@ -30,7 +30,7 @@ public class ProductTester {
         }
     }
     
-    public static void addToInventory(Product[] products, Scanner in){
+    /*public static void addToInventory(Product[] products, Scanner in){
         String tempName;
         int tempQty;
         double tempPrice;
@@ -44,6 +44,70 @@ public class ProductTester {
             System.out.println("Masukkan harga barang : ");
             tempPrice = in.nextDouble();
             products[i] = new Product(i+1,tempName,tempQty,tempPrice);
+        }
+    }*/
+
+    public static void addToInventory(Product[] products, Scanner in){
+        int stockChoice = -1;
+
+        do{
+            try{
+                if (stockChoice == 0){
+                    System.out.println("");
+                } else if (stockChoice == 1){
+                    
+                } else {
+
+                }
+            } catch (Exception e) {
+                System.out.println();
+                in.nextLine();
+            }
+        } while (stockChoice == 0);
+    }
+
+    public static void addCDToInventory(CD[] products, Scanner in){
+        String tempName,tempArtist,tempAgeRating;
+        int tempQty,tempLenght;
+        double tempPrice;
+        
+        for (int i = 0;i < products.length;i++){
+            System.out.println("\n\t=Barang nomor "+ (i+1)+"=");
+            System.out.println("Masukkan nama CD : ");
+            tempName = in.next();
+            System.out.println("Masukkan nama artis : ");
+            tempArtist = in.next();
+            System.out.println("Masukkan nama label rekaman : ");
+            tempAgeRating = in.next();
+            System.out.println("Masukkan jumlah lagu : ");
+            tempLenght = in.nextInt();
+            System.out.println("Masukkan jumlah barang : ");
+            tempQty = in.nextInt();
+            System.out.println("Masukkan harga barang : ");
+            tempPrice = in.nextDouble();
+            products[i] = new CD(i+1,tempName,tempPrice,tempQty,tempArtist,tempLenght,tempAgeRating);
+        }
+    }
+    public static void addDVDToInventory(DVD[] products, Scanner in){
+        String tempName,tempFilmStudio;
+        int tempQty,tempLenght,tempAgeRating;
+        double tempPrice;
+        
+        for (int i = 0;i < products.length;i++){
+            System.out.println("\n\t=Barang nomor "+ (i+1)+"=");
+            System.out.println("Masukkan nama DVD : ");
+            tempName = in.next();
+            System.out.println("Masukkan nama studio film : ");
+            tempFilmStudio = in.next();
+            System.out.println("Masukkan nilai usia : ");
+            tempAgeRating = in.nextInt();
+            System.out.println("Masukkan durasi film (menit) : ");
+            tempLenght = in.nextInt();
+            System.out.println("Masukkan jumlah barang : ");
+            tempQty = in.nextInt();
+            System.out.println("Masukkan harga barang : ");
+            tempPrice = in.nextDouble();
+            products[i] = new DVD(i+1,tempName,tempPrice,tempQty,tempLenght,tempAgeRating,tempFilmStudio);
         }
     }
     
@@ -83,6 +147,44 @@ public class ProductTester {
         return pilih;
     }
 
+    public static int getCDProductNumber(CD[] products, Scanner in){
+        int productChoice = -1;
+        for (int i = 0;i < products.length;i++) {
+            System.out.println((i+1)+". "+products[i].getname());
+        }
+        do {
+            try {
+                System.out.println("Masukkan nomor produk : ");
+                productChoice = in.nextInt();
+                if (productChoice < 0 || productChoice > products.length) {
+                    System.out.println("Incorrect number entered!");
+                }
+            } catch (Exception e) {
+                System.out.println("Incorrect type data entered!");
+                in.nextLine();
+            }
+        } while (productChoice < 0 || productChoice > products.length);
+        return productChoice - 1;
+    }
+    public static int getDVDProductNumber(DVD[] products, Scanner in){
+        int productChoice = -1;
+        for (int i = 0;i < products.length;i++) {
+            System.out.println((i+1)+". "+products[i].getname());
+        }
+        do {
+            try {
+                System.out.println("Masukkan nomor produk : ");
+                productChoice = in.nextInt();
+                if (productChoice < 0 || productChoice > products.length) {
+                    System.out.println("Incorrect number entered!");
+                }
+            } catch (Exception e) {
+                System.out.println("Incorrect type data entered!");
+                in.nextLine();
+            }
+        } while (productChoice < 0 || productChoice > products.length);
+        return productChoice - 1;
+    }
     public static int getProductNumber(Product[] products, Scanner in){
         int productChoice = -1;
         for (int i = 0;i < products.length;i++) {
